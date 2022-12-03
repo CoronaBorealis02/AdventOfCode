@@ -12,8 +12,8 @@ for i in rucksacklist:
     complen = rucksacklen / 2
     complen = int(complen)
     comp1.append(i[:complen])
-    comp2.append(i[-complen:])
-    print(str(i[:complen]) + ", " + str(i[-complen:]))
+    comp2.append(i[complen:])
+
 
 matches = []
 for i in comp1:
