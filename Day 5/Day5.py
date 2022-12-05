@@ -4,17 +4,20 @@ f = open("Day 5/Input.txt", "r")
 
 Instructions = f.read().split("\n")
 
-s1 = ["B", "V", "S", "N", "T", "C", "H", "Q"]
-s2 = ["W", "D", "B", "G"]
-s3 = ["F", "W", "R", "T", "S", "Q", "B"]
-s4 = ["L", "G", "W", "S", "Z", "J", "D", "N"]
-s5 = ["M", "P", "D", "V", "F"]
-s6 = ["F", "W", "J"]
-s7 = ["L", "N", "Q", "B", "J", "V"]
-s8 = ["G", "T", "R", "C", "J", "Q", "S", "N"]
-s9 = ["J", "S", "Q", "C", "W", "D", "M"]
+def resetstacks():
+    originalstacks = [["B", "V", "S", "N", "T", "C", "H", "Q"],
+                      ["W", "D", "B", "G"],
+                      ["F", "W", "R", "T", "S", "Q", "B"],
+                      ["L", "G", "W", "S", "Z", "J", "D", "N"],
+                      ["M", "P", "D", "V", "F"],
+                      ["F", "W", "J"],
+                      ["L", "N", "Q", "B", "J", "V"],
+                      ["G", "T", "R", "C", "J", "Q", "S", "N"],
+                      ["J", "S", "Q", "C", "W", "D", "M"]]
+    return originalstacks
 
-stacks = [s1, s2, s3, s4, s5, s6, s7, s8, s9]
+
+stacks = resetstacks()
 
 for line in Instructions:
     numins = [int(i) for i in line.split() if i.isdigit()]
@@ -32,17 +35,7 @@ print("-----")
 
 #PART 2
 
-s1 = ["B", "V", "S", "N", "T", "C", "H", "Q"]
-s2 = ["W", "D", "B", "G"]
-s3 = ["F", "W", "R", "T", "S", "Q", "B"]
-s4 = ["L", "G", "W", "S", "Z", "J", "D", "N"]
-s5 = ["M", "P", "D", "V", "F"]
-s6 = ["F", "W", "J"]
-s7 = ["L", "N", "Q", "B", "J", "V"]
-s8 = ["G", "T", "R", "C", "J", "Q", "S", "N"]
-s9 = ["J", "S", "Q", "C", "W", "D", "M"]
-
-stacks = [s1, s2, s3, s4, s5, s6, s7, s8, s9]
+stacks = resetstacks()
 
 for line in Instructions:
     numins = [int(i) for i in line.split() if i.isdigit()]
