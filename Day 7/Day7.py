@@ -1,17 +1,24 @@
-import os
-#print(os.getcwd())
+#Part 1
 
-f = open("Day 7\Input.txt", "r")
+f = open("Day 7/Input.txt", "r")
 line = f.read().split("\n")
 
 totsize = 0
 curdir = []
-#dir = ""
-#cursize = 0
-dirsize = {}
+dirsize = dict()
 readmode = False
+path = ""
+
+def makepath(limit = 0):
+    if limit == 0:
+        path = "/" + "/".join(curdir[1:])
+    else:
+        path = "/" + "/".join(curdir[1:-(limit)])
+    if len(curdir) == 1:
+        path = "/"
+    return path
+
 for i in line:
-    print(curdir)
     op = i.strip("$").split(" ")
     if readmode == True and (op[1] == "cd" or op[1] == "ls"):
         readmode = False
@@ -22,38 +29,46 @@ for i in line:
             elif op[2] == "/":
                 curdir.clear()
                 curdir.append(op[2])
+                if makepath() not in dirsize.keys():
+                    dirsize[makepath()] = 0
             else:
-                #if op[2] in dirsize.keys():
-                #    op[2] = str(op[2] + "2")
                 curdir.append(op[2])
+                if makepath() not in dirsize.keys():
+                    dirsize[makepath()] = 0
         if op[1] == "ls":
             readmode = True
     else:
         if op[0] != "dir":
-            #print(curdir)
-            try:
-                dirsize[str(curdir[-1])] += int(op[0])
-            except:
-                dirsize[str(curdir[-1])] = 0
-                dirsize[str(curdir[-1])] += int(op[0])
-            #print(dirsize[curdir[-1]])
+            dirsize[makepath()] += int(op[0])
+            if makepath() != "/":
+                dirsize['/'] += int(op[0])
             if len(curdir) > 2:
-                #print(curdir)
-                for i in range(len(curdir) - 1):
-                    #print(curdir)
-                    #print(curdir[-(i+1)])
-                    #print(curdir[-i])
-                    try:
-                        dirsize[curdir[-(i+1)]] += dirsize[curdir[-i]]
-                    except:
-                        dirsize[str(curdir[-(i+1)])] = 0
-                        dirsize[curdir[-(i+1)]] += dirsize[curdir[-i]]
-            
+                for i in range(len(curdir) - 2):
+                    if makepath(i+1) in dirsize.keys() and makepath(i) in dirsize.keys():
+                        dirsize[makepath(i+1)] += dirsize[makepath(i)]
+                    elif makepath(i) in dirsize:
+                        dirsize[makepath(i+1)] = 0
+                        dirsize[makepath(i+1)] += dirsize[makepath(i)]
 
+            
 for i in dirsize:
     if dirsize[i] <= 100000:
-        #print(str(dirsize[i]) + " True")
         totsize += int(dirsize[i])
-    #else:
-        #print(str(dirsize[i]) + " False")
-#print(totsize)
+print(totsize)
+
+#Part 2
+
+usedspace = dirsize['/']
+totalspace = 70000000
+neededspace = 30000000
+unusedspace = totalspace - usedspace
+neededspace -= unusedspace
+delcandidates = []
+
+for i in dirsize:
+    if dirsize[i] > neededspace:
+        delcandidates.append(dirsize[i])
+
+delcandidates.sort()
+print(delcandidates[0])
+
