@@ -7,7 +7,7 @@ wordlist = f.read().split("\n")
 
 valuelist = []
 for i in wordlist:
-	x=re.findall(r'one|two|three|four|five|six|seven|eight|nine|zero|[0-9]', i)
+	x=re.findall(r'(?=(zero|one|two|three|four|five|six|seven|eight|nine|[0-9]))', i)
 	for ii in range(len(x)):
 		if isinstance(x[ii], numbers.Number):
 			break
